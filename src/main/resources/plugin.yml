@@ -1,0 +1,4 @@
+name: CustomFishingTraps
+version: '1.0-SNAPSHOT'
+main: org.CustomFishingTraps
+api-version: '1.20'
