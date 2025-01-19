@@ -6,8 +6,14 @@ import eu.decentsoftware.holograms.api.DecentHologramsAPI;
 import net.momirealms.customfishing.api.BukkitCustomFishingPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.sqllite.Database;
+import org.sqllite.SQLite;
 
 public final class CustomFishingTraps extends JavaPlugin {
+
+    private CustomFishingTraps plugin;
+    private Database db;
+    private BukkitCustomFishingPlugin customFishingApi;
 
 
     @Override
@@ -28,17 +34,32 @@ public final class CustomFishingTraps extends JavaPlugin {
         else
             getLogger().info("Items adder API isn't loaded for Custom Fishing Traps!"); }
         // Custom Fishing API Loaded
-            BukkitCustomFishingPlugin customFishingApi = BukkitCustomFishingPlugin.getInstance();
+            this.customFishingApi = BukkitCustomFishingPlugin.getInstance();
         if (customFishingApi == null)
             getLogger().info("Custom Fishing api hasn't loaded!");
         else
             getLogger().info("Custom Fishing api has loaded!");
         }
+
+        // Load the database for storing fishing traps
+        this.db = new SQLite(this);
+        this.db.load();
+
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         getLogger().info("CustomFishingTraps has been disabled!");
+    }
+
+    public static CustomFishingTraps getInstance() {
+        return CustomFishingTraps.getInstance();
+    }
+    public Database getDatabase() {
+        return db;
+    }
+    public BukkitCustomFishingPlugin getCustomFishingApi() {
+        return this.customFishingApi;
     }
 }
