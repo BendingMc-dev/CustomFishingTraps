@@ -14,6 +14,7 @@ public class SQLite extends Database {
     String dbname;
     public SQLite(CustomFishingTraps instance){
         super(instance);
+        this.plugin = instance;
         dbname = "fishing_traps";
     }
 
