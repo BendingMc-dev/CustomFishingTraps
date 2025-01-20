@@ -9,19 +9,25 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 
-
 public class CustomFishingTrapsInteract implements Listener {
     public CustomFishingTrapsInteract() {
     }
     @EventHandler
     public void onInteract(FurnitureInteractEvent event) {
+        // Variables
         Player player = event.getPlayer();
         CustomFurniture clickedFurniture = event.getFurniture();
         String fishingTrap = "bmc:fishing_block";
-        if(clickedFurniture.equals(fishingTrap))
-           Bukkit.getLogger().info(player +"Clicked fishing trap!");
+        // Event
+        String Id = clickedFurniture.getNamespacedID();
+        if(Id.equals(fishingTrap))
+           Bukkit.getLogger().info(player +"\nClicked fishing trap! Id =\n" + Id);
         else
-            Bukkit.getLogger().info(player +"Didn't click fishing trap!");
+            Bukkit.getLogger().info(player +"\nDidn't click fishing trap! Id =\n" + Id);
+
         }
     }
+
+
+
 
