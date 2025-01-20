@@ -1,16 +1,21 @@
-package FurnitureInteract;
+package main;
 
 
 import dev.lone.itemsadder.api.CustomFurniture;
 import dev.lone.itemsadder.api.Events.FurnitureInteractEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 
 public class CustomFishingTrapsInteract implements Listener {
-    public CustomFishingTrapsInteract() {
+    public final NamespacedKey KEY;
+    public CustomFishingTrapsInteract (CustomFishingTraps customFishingTraps) {
+        this.KEY = new NamespacedKey(customFishingTraps, "trapId");
+
     }
     @EventHandler
     public void onInteract(FurnitureInteractEvent event) {

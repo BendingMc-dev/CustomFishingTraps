@@ -1,6 +1,6 @@
-package org.sqllite;
+package main.sqlite;
 
-import org.CustomFishingTraps;
+import main.CustomFishingTraps;
 
 import java.io.File;
 import java.io.IOException;

@@ -3,17 +3,16 @@
 // (powered by FernFlower decompiler)
 //
 
-package org.sqllite;
+package main.sqlite;
 
-import org.CustomFishingTraps;
-import org.FishingTrap;
+import main.CustomFishingTraps;
+import main.FishingTrap;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -67,7 +66,7 @@ public abstract class Database {
                 List<ItemStack> bait = deserializeItems(rs.getString("bait"));
                 int maxBait = rs.getInt("maxBait");
 
-                return new FishingTrap(key, owner, location, active, items, maxItems, bait, maxBait);
+                return new FishingTrap(key, UUID.fromString(id) ,owner, location, active, items, maxItems, bait, maxBait);
             }
         } catch (SQLException ex) {
             plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);

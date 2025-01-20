@@ -1,32 +1,31 @@
-package FishingTrapData;
+package main;
 
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class FishingTrap {
 
-    public static FishingTrap EMPTY = new FishingTrap("null",null, null, false, null, 0, null, 0);
+    public static FishingTrap EMPTY = new FishingTrap("null", null, null, null, false, null, 0, null, 0);
 
     protected UUID id;
     protected UUID owner;
     protected String key;
-    protected @NotNull Map<String, Object> location;
+    protected @NotNull Location location;
     protected boolean active;
     protected List<ItemStack> items;
     protected int maxItems;
     protected List<ItemStack> bait;
     protected int maxBait;
 
-    public FishingTrap(String key, UUID owner, Location location, boolean active, List<ItemStack> items, int maxItems, List<ItemStack> bait, int maxDDDBait) {
+    public FishingTrap(String key, UUID id, UUID owner, Location location, boolean active, List<ItemStack> items, int maxItems, List<ItemStack> bait, int maxBait) {
         this.key = key;
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.owner = owner;
-        this.location = location.serialize();
+        this.location = location;
         this.active = active;
         this.items = items;
         this.maxItems = maxItems;
@@ -46,7 +45,7 @@ public class FishingTrap {
         return key;
     }
 
-    public @NotNull Map<String, Object> getLocation() {
+    public @NotNull Location getLocation() {
         return location;
     }
 
@@ -81,8 +80,7 @@ public class FishingTrap {
     public void setKey(String key) {
         this.key = key;
     }
-
-    public void setLocation(@NotNull Map<String, Object> location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
