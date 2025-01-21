@@ -1,32 +1,33 @@
-package FishingTrapData;
+package org.objects;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class FishingTrap {
 
-    public static FishingTrap EMPTY = new FishingTrap("null",null, null, false, null, 0, null, 0);
+    public static FishingTrap EMPTY = new FishingTrap("null",null, null, null, false, null, 0, null, 0);
 
     protected UUID id;
     protected UUID owner;
     protected String key;
-    protected @NotNull Map<String, Object> location;
+    protected @NotNull Location location;
     protected boolean active;
     protected List<ItemStack> items;
     protected int maxItems;
     protected List<ItemStack> bait;
     protected int maxBait;
 
-    public FishingTrap(String key, UUID owner, Location location, boolean active, List<ItemStack> items, int maxItems, List<ItemStack> bait, int maxDDDBait) {
+    public FishingTrap(String key, UUID id, UUID owner, Location location, boolean active, List<ItemStack> items, int maxItems, List<ItemStack> bait, int maxBait) {
         this.key = key;
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.owner = owner;
-        this.location = location.serialize();
+        this.location = location;
         this.active = active;
         this.items = items;
         this.maxItems = maxItems;
@@ -46,7 +47,7 @@ public class FishingTrap {
         return key;
     }
 
-    public @NotNull Map<String, Object> getLocation() {
+    public @NotNull Location getLocation() {
         return location;
     }
 
@@ -82,7 +83,7 @@ public class FishingTrap {
         this.key = key;
     }
 
-    public void setLocation(@NotNull Map<String, Object> location) {
+    public void setLocation(@NotNull Location location) {
         this.location = location;
     }
 
@@ -120,5 +121,18 @@ public class FishingTrap {
 
     public void addBait(ItemStack item) {
         bait.add(item);
+    }
+
+    // Method to check if the trap is active by seeing if its in water
+    public void checkActive() {
+        if (!active) { // AND add if bait list is not empty
+            int[][] directions = {{0, 0, -1}, {0, 0, 1}, {1, 0, 0}, {-1, 0, 0}}; // This is kinda complicated, but it's just checking the blocks around the trap
+            for (int[] dir : directions) { // For each direction
+                if (location.getBlock().getRelative(dir[0], dir[1], dir[2]).getType().equals(Material.WATER)) { // If the block in that direction is water
+                    active = true; // Set the trap to active
+                    break;
+                }
+            }
+        }
     }
 }

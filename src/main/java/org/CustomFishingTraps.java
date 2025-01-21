@@ -1,26 +1,37 @@
 package org;
 
-import FurnitureInteract.CustomFishingTrapsInteract;
 import dev.lone.itemsadder.api.ItemsAdder;
 import eu.decentsoftware.holograms.api.DecentHologramsAPI;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.momirealms.customfishing.api.BukkitCustomFishingPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.listeners.CustomFishingTrapsInteract;
+import org.listeners.MenuListener;
 import org.sqllite.Database;
 import org.sqllite.SQLite;
+import org.utilities.ConfigUtil;
 
 public final class CustomFishingTraps extends JavaPlugin {
 
-    private CustomFishingTraps plugin;
-    private Database db;
-    private BukkitCustomFishingPlugin customFishingApi;
+    public static CustomFishingTraps plugin;
+    public static BukkitAudiences adventure;
+    private static Database db;
+    private static BukkitCustomFishingPlugin customFishingApi;
 
 
     @Override
     public void onEnable() {
+        this.plugin = this;
+        adventure = BukkitAudiences.create(this);
+
+
+
+
         Bukkit.getLogger().info("Test!");
         // Call other class
-        getServer().getPluginManager().registerEvents(new CustomFishingTrapsInteract(), this);
+        getServer().getPluginManager().registerEvents(new CustomFishingTrapsInteract(this), this);
+        getServer().getPluginManager().registerEvents(new MenuListener(), this);
         // Plugin start up logic
         getLogger().info("CustomFishingTraps has loaded! Testing reload.");
         // Decent Holograms API loaded, no idea why I couldn't use else???
@@ -41,6 +52,8 @@ public final class CustomFishingTraps extends JavaPlugin {
             getLogger().info("Custom Fishing api has loaded!");
         }
 
+        // Reload the plugin configuration
+
         // Load the database for storing fishing traps
         this.db = new SQLite(this);
         this.db.load();
@@ -50,16 +63,23 @@ public final class CustomFishingTraps extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        // Save the database
+        // Unload methods
         getLogger().info("CustomFishingTraps has been disabled!");
     }
 
-    public static CustomFishingTraps getInstance() {
-        return CustomFishingTraps.getInstance();
+    // Add reloadConfig method so we can handle reloading ourselves
+    @Override
+    public void reloadConfig() {
+        ConfigUtil.reload();
     }
-    public Database getDatabase() {
+    public static CustomFishingTraps getInstance() {
+        return plugin;
+    }
+    public static Database getDatabase() {
         return db;
     }
-    public BukkitCustomFishingPlugin getCustomFishingApi() {
-        return this.customFishingApi;
+    public static BukkitCustomFishingPlugin getCustomFishingApi() {
+        return customFishingApi;
     }
 }

@@ -5,10 +5,8 @@
 
 package org.sqllite;
 
-import net.momirealms.customfishing.api.mechanic.loot.Loot;
-import net.momirealms.customfishing.common.item.Item;
+import org.objects.FishingTrap;
 import org.CustomFishingTraps;
-import org.FishingTrap;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -21,7 +19,6 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -47,13 +44,54 @@ public abstract class Database {
         this.connection = this.getSQLConnection();
 
         try {
-            PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM " + this.table + " WHERE player = ?");
+            PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM " + this.table + " WHERE id = ?");
             ResultSet rs = ps.executeQuery();
             this.close(ps, rs);
         } catch (SQLException var3) {
             plugin.getLogger().log(Level.SEVERE, "Unable to retreive connection", var3);
         }
 
+    }
+
+    public List<FishingTrap> getActiveFishingTraps() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            List<FishingTrap> fishingTraps = new ArrayList<>();
+            conn = getSQLConnection();
+            ps = conn.prepareStatement("SELECT * FROM fishing_traps WHERE active = 1");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                UUID id = UUID.fromString(rs.getString("id"));
+                UUID owner = UUID.fromString(rs.getString("owner"));
+                String key = rs.getString("key");
+                Location location = deserializeLocation(rs.getString("location"));
+                boolean active = rs.getInt("active") == 1;
+                List<ItemStack> items = deserializeItems(rs.getString("items"));
+                int maxItems = rs.getInt("maxItems");
+                List<ItemStack> bait = deserializeItems(rs.getString("bait"));
+                int maxBait = rs.getInt("maxBait");
+
+                fishingTraps.add(new FishingTrap(key, id, owner, location, active, items, maxItems, bait, maxBait));
+            }
+            return fishingTraps;
+        } catch (SQLException ex) {
+            plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
+        } catch (IOException e) {
+            plugin.getLogger().log(Level.SEVERE, "Failed to deserialize items", e);
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException ex) {
+                plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
+            }
+        }
+        return null;
     }
 
     public FishingTrap getFishingTrapById(String id) {

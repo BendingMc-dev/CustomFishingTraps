@@ -12,7 +12,7 @@
   <name>CustomFishingTraps</name>
 
   <properties>
-    <java.version>17</java.version>
+    <java.version>18</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -72,8 +72,8 @@
       <url>https://maven.devs.beer/</url>
     </repository>
     <repository>
-      <id>jitpack</id>
-      <url>https://jitpack.io/</url>
+      <id>glaremasters repo</id>
+      <url>https://repo.glaremasters.me/repository/towny/</url>
     </repository>
   </repositories>
 
@@ -100,6 +100,27 @@
       <groupId>com.github.Xiao-MoMi</groupId>
       <artifactId>Custom-Fishing</artifactId>
       <version>2.2.3</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.kyori</groupId>
+      <artifactId>adventure-api</artifactId>
+      <version>4.14.0</version>
+    </dependency>
+    <dependency>
+      <groupId>net.kyori</groupId>
+      <artifactId>adventure-platform-bukkit</artifactId>
+      <version>4.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>net.kyori</groupId>
+      <artifactId>adventure-text-minimessage</artifactId>
+      <version>4.12.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.palmergames.bukkit.towny</groupId>
+      <artifactId>towny</artifactId>
+      <version>0.101.1.0</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
