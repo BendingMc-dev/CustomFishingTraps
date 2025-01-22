@@ -3,10 +3,10 @@
 // (powered by FernFlower decompiler)
 //
 
-package org.sqllite;
+package main.sqlite;
 
-import org.objects.FishingTrap;
-import org.CustomFishingTraps;
+import main.CustomFishingTraps;
+import main.objects.FishingTrap;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;

@@ -1,6 +1,6 @@
-package org.listeners;
+package main.listeners;
 
-import org.FishingTrapInventory;
+import main.FishingTrapInventory;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

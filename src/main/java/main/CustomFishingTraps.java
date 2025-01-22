@@ -1,16 +1,16 @@
-package org;
+package main;
 
 import dev.lone.itemsadder.api.ItemsAdder;
 import eu.decentsoftware.holograms.api.DecentHologramsAPI;
+import main.listeners.CustomFishingTrapsInteract;
+import main.utilities.ConfigUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.momirealms.customfishing.api.BukkitCustomFishingPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.listeners.CustomFishingTrapsInteract;
-import org.listeners.MenuListener;
-import org.sqllite.Database;
-import org.sqllite.SQLite;
-import org.utilities.ConfigUtil;
+import main.listeners.MenuListener;
+import main.sqlite.Database;
+import main.sqlite.SQLite;
 
 public final class CustomFishingTraps extends JavaPlugin {
 

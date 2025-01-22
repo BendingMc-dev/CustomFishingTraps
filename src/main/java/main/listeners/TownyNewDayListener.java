@@ -1,7 +1,7 @@
-package org.listeners;
+package main.listeners;
 
 import com.palmergames.bukkit.towny.event.NewDayEvent;
-import org.DataManager;
+import main.DataManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

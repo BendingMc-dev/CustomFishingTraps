@@ -1,13 +1,12 @@
-package org.utilities;
+package main.utilities;
 
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
-import org.CustomFishingTraps;
+import main.CustomFishingTraps;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

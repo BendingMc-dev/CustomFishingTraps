@@ -1,4 +1,4 @@
-package org.sqllite;
+package main.sqlite;
 
 public class Errors {
     public static String sqlConnectionExecute(){

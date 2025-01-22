@@ -1,6 +1,6 @@
-package org.utilities;
+package main.utilities;
 
-import org.CustomFishingTraps;
+import main.CustomFishingTraps;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

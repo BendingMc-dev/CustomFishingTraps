@@ -1,17 +1,16 @@
-package org.listeners;
+package main.listeners;
 
 
 import dev.lone.itemsadder.api.CustomFurniture;
 import dev.lone.itemsadder.api.Events.FurnitureBreakEvent;
 import dev.lone.itemsadder.api.Events.FurnitureInteractEvent;
-import org.CustomFishingTraps;
-import org.DataManager;
+import main.CustomFishingTraps;
+import main.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 
 
 public class CustomFishingTrapsInteract implements Listener {

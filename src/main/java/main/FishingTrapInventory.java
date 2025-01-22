@@ -1,15 +1,12 @@
-package org;
+package main;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.objects.FishingTrap;
+import main.objects.FishingTrap;
 
 import java.util.List;
-
-import static org.CustomFishingTraps.plugin;
 
 public class FishingTrapInventory implements InventoryHolder {
 

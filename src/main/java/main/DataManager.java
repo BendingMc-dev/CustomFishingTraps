@@ -1,5 +1,6 @@
-package org;
+package main;
 
+import main.utilities.AdventureUtil;
 import net.momirealms.customfishing.api.mechanic.context.Context;
 import net.momirealms.customfishing.api.mechanic.context.ContextKeys;
 import net.momirealms.customfishing.api.mechanic.effect.Effect;
@@ -7,11 +8,9 @@ import net.momirealms.customfishing.api.mechanic.loot.Loot;
 import net.momirealms.customfishing.api.mechanic.loot.LootType;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.objects.FishingTrap;
-import org.utilities.AdventureUtil;
+import main.objects.FishingTrap;
 
 import java.util.ArrayList;
 import java.util.Collections;
