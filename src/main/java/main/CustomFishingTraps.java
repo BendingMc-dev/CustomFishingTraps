@@ -3,6 +3,7 @@ package main;
 import dev.lone.itemsadder.api.ItemsAdder;
 import eu.decentsoftware.holograms.api.DecentHologramsAPI;
 import main.listeners.CustomFishingTrapsInteract;
+import main.listeners.TownyNewDayListener;
 import main.utilities.ConfigUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.momirealms.customfishing.api.BukkitCustomFishingPlugin;
@@ -32,6 +33,7 @@ public final class CustomFishingTraps extends JavaPlugin {
         // Call other class
         getServer().getPluginManager().registerEvents(new CustomFishingTrapsInteract(this), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
+        getServer().getPluginManager().registerEvents(new TownyNewDayListener(), this);
         // Plugin start up logic
         getLogger().info("CustomFishingTraps has loaded! Testing reload.");
         // Decent Holograms API loaded, no idea why I couldn't use else???

@@ -18,6 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -28,7 +29,6 @@ public abstract class Database {
     static CustomFishingTraps plugin;
     Connection connection;
     public String table = "fishing_traps";
-    public int tokens = 0;
 
     public Database(CustomFishingTraps instance) {
         plugin = instance;
@@ -70,10 +70,9 @@ public abstract class Database {
                 boolean active = rs.getInt("active") == 1;
                 List<ItemStack> items = deserializeItems(rs.getString("items"));
                 int maxItems = rs.getInt("maxItems");
-                List<ItemStack> bait = deserializeItems(rs.getString("bait"));
-                int maxBait = rs.getInt("maxBait");
+                ItemStack bait = deserializeItems(rs.getString("bait")).get(0);
 
-                fishingTraps.add(new FishingTrap(key, id, owner, location, active, items, maxItems, bait, maxBait));
+                fishingTraps.add(new FishingTrap(key, id, owner, location, active, items, maxItems, bait));
             }
             return fishingTraps;
         } catch (SQLException ex) {
@@ -110,10 +109,9 @@ public abstract class Database {
                 boolean active = rs.getInt("active") == 1;
                 List<ItemStack> items = deserializeItems(rs.getString("items"));
                 int maxItems = rs.getInt("maxItems");
-                List<ItemStack> bait = deserializeItems(rs.getString("bait"));
-                int maxBait = rs.getInt("maxBait");
+                ItemStack bait = deserializeItems(rs.getString("bait")).get(0);
 
-                return new FishingTrap(key, UUID.fromString(id), owner, location, active, items, maxItems, bait, maxBait);
+                return new FishingTrap(key, UUID.fromString(id), owner, location, active, items, maxItems, bait);
             }
         } catch (SQLException ex) {
             plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
@@ -149,6 +147,11 @@ public abstract class Database {
                 itemStacks.add((ItemStack) dataInput.readObject());
             }
             dataInput.close();
+
+            if (itemStacks.size() == 0) {
+                itemStacks.add(ItemStack.empty());
+            }
+
             return itemStacks;
         } catch (Exception e) {
             throw new IllegalStateException("Unable to load item stacks.", e);
@@ -160,7 +163,7 @@ public abstract class Database {
         PreparedStatement ps = null;
         try {
             conn = getSQLConnection();
-            ps = conn.prepareStatement("REPLACE INTO fishing_traps(id, owner, key, location, active, items, maxItems, bait, maxBait) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            ps = conn.prepareStatement("REPLACE INTO fishing_traps(id, owner, key, location, active, items, maxItems, bait) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
 
             ps.setString(1, trap.getId().toString());
             ps.setString(2, trap.getOwner().toString());
@@ -169,8 +172,7 @@ public abstract class Database {
             ps.setInt(5, trap.isActive() ? 1 : 0);
             ps.setString(6, serializeItems(trap.getItems()));
             ps.setInt(7, trap.getMaxItems());
-            ps.setString(8, serializeItems(trap.getBait()));
-            ps.setInt(9, trap.getMaxBait());
+            ps.setString(8, serializeItems(Collections.singletonList(trap.getBait())));
 
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -188,7 +190,7 @@ public abstract class Database {
     }
 
     private String serializeLocation(Location location) {
-        return location.getWorld().toString() + ":" + location.getX() + ":" + location.getY() + ":" + location.getZ();
+        return "world" + ":" + location.getX() + ":" + location.getY() + ":" + location.getZ();
     }
 
     private String serializeItems(List<ItemStack> items) throws IllegalStateException {

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class FishingTrap {
 
-    public static FishingTrap EMPTY = new FishingTrap("null",null, null, null, false, null, 0, null, 0);
+    public static FishingTrap EMPTY = new FishingTrap("null",null, null, null, false, null, 0, null);
 
     protected UUID id;
     protected UUID owner;
@@ -19,10 +19,9 @@ public class FishingTrap {
     protected boolean active;
     protected List<ItemStack> items;
     protected int maxItems;
-    protected List<ItemStack> bait;
-    protected int maxBait;
+    protected ItemStack bait;
 
-    public FishingTrap(String key, UUID id, UUID owner, Location location, boolean active, List<ItemStack> items, int maxItems, List<ItemStack> bait, int maxBait) {
+    public FishingTrap(String key, UUID id, UUID owner, Location location, boolean active, List<ItemStack> items, int maxItems, ItemStack bait) {
         this.key = key;
         this.id = id;
         this.owner = owner;
@@ -31,7 +30,6 @@ public class FishingTrap {
         this.items = items;
         this.maxItems = maxItems;
         this.bait = bait;
-        this.maxBait = maxBait;
     }
 
     public UUID getId() {
@@ -62,12 +60,8 @@ public class FishingTrap {
         return maxItems;
     }
 
-    public List<ItemStack> getBait() {
+    public ItemStack getBait() {
         return bait;
-    }
-
-    public int getMaxBait() {
-        return maxBait;
     }
 
     public void setId(UUID id) {
@@ -98,28 +92,29 @@ public class FishingTrap {
         this.maxItems = maxItems;
     }
 
-    public void setBait(List<ItemStack> bait) {
+    public void setBait(ItemStack bait) {
         this.bait = bait;
-    }
-
-    public void setMaxBait(int maxBait) {
-        this.maxBait = maxBait;
     }
 
     public boolean isFull() {
         return items.size() >= maxItems;
     }
 
-    public boolean isBaitFull() {
-        return bait.size() >= maxBait;
-    }
 
     public void addItem(ItemStack item) {
         items.add(item);
     }
 
-    public void addBait(ItemStack item) {
-        bait.add(item);
+    public boolean addBait(ItemStack item) {
+        if (bait == null) {
+            bait = item;
+            return true;
+        }
+        if (bait == item) {
+            bait.setAmount(bait.getAmount() + item.getAmount());
+            return true;
+        }
+        return false;
     }
 
     // Method to check if the trap is active by seeing if its in water

@@ -29,7 +29,6 @@ public class SQLite extends Database {
             "`items` TEXT," +
             "`maxItems` INTEGER NOT NULL," +
             "`bait` TEXT," +
-            "`maxBait` INTEGER NOT NULL," +
             "PRIMARY KEY (`id`)" +
             ");";
 
